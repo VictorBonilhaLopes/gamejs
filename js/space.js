@@ -31,11 +31,17 @@ let alienHeight = tileSize;
 let alienX = tileSize;
 let alienY = tileSize;
 let alienImages = [
+    "../img/enemy1.png",
+    "../img/enemy2.png",
+    "../img/enemy1.png",
+    "../img/enemy2.png"
+];
+/* let alienImages = [
     "../img/alien.png",
     "../img/alien-yellow.png",
     "../img/alien-cyan.png",
     "../img/alien-magenta.png"
-];
+]; */
 let currentAlienImageIndex = 0;
 let alienImg = new Image();
 alienImg.src = alienImages[currentAlienImageIndex]; //image array
@@ -60,7 +66,7 @@ window.onload = function () {
     context = board.getContext('2d');
 
     shipImg = new Image();
-    shipImg.src = "../img/ship.png";
+    shipImg.src = "../img/stand.png";
     shipImg.onload = function () {
         context.drawImage(shipImg, ship.x, ship.y, ship.width, ship.height);
     };
