@@ -172,7 +172,7 @@ function update() {
             }
         }
 
-        while (bulletArray.length > 0 && bulletArray[0].used || bulletArray[0].y < 0) {
+        while (bulletArray.length > 0 && bulletArray[0].used /* || bulletArray[0].y < 0 */) {
             bulletArray.shift();//removes the first
         }
 
@@ -227,6 +227,13 @@ function shoot(e) {
             used: false,
         }
         bulletArray.push(bullet);
+
+        // Reproduzir o áudio de tiro
+        const audio = document.getElementById('audio');
+        audio.currentTime = 0; // Reinicia o áudio
+        audio.play().catch(error => {
+            console.error('Erro ao tentar reproduzir o áudio:', error);
+        });
     }
 }
 
@@ -236,3 +243,25 @@ function detectColision(a, b) {
         a.y < b.y + b.height &&
         a.y + a.height > b.y;
 }
+
+/* document.addEventListener('DOMContentLoaded', (event) => {
+    const audio = document.getElementById('audio');
+
+    // Verifique se o áudio foi carregado corretamente
+    audio.addEventListener('canplaythrough', () => {
+        console.log('Áudio carregado com sucesso.');
+    }, false);
+
+    audio.addEventListener('error', (event) => {
+        console.error('Erro ao carregar o áudio:', event);
+    }, false);
+
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space') {
+            audio.currentTime = 0; // Reinicia o áudio
+            audio.play().catch(error => {
+                console.error('Erro ao tentar reproduzir o áudio:', error);
+            });
+        }
+    });
+}); */
