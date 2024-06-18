@@ -10,7 +10,7 @@ let context;
 
 //ship
 let shipWidth = tileSize * 2;
-let shipHeight = tileSize;
+let shipHeight = tileSize * 2;
 let shipX = tileSize * columns / 2 - tileSize;
 let shipY = tileSize * rows - tileSize * 2;
 
@@ -27,7 +27,7 @@ let shipVelocityX = tileSize; //ship speed
 //alien
 let alienArray = [];
 let alienWidth = tileSize * 2;
-let alienHeight = tileSize;
+let alienHeight = tileSize * 1.2;
 let alienX = tileSize;
 let alienY = tileSize;
 let alienImages = [
@@ -36,12 +36,6 @@ let alienImages = [
     "../img/enemy1.png",
     "../img/enemy2.png"
 ];
-/* let alienImages = [
-    "../img/alien.png",
-    "../img/alien-yellow.png",
-    "../img/alien-cyan.png",
-    "../img/alien-magenta.png"
-]; */
 let currentAlienImageIndex = 0;
 let alienImg = new Image();
 alienImg.src = alienImages[currentAlienImageIndex]; //image array
@@ -108,9 +102,13 @@ function startGame() {
     score = 0;
     currentAlienImageIndex = 0;
     gameState = "playing";
+    alienArray = [];
+    alienCount = 0;
+    alienColumns = 3; 
+    alienRows = 2; 
+    alienVelocityX = 2;
     ship.x = shipX;
     ship.y = shipY;
-    alienArray = [];
     bulletArray = [];
     creatAliens();
 }
@@ -172,7 +170,7 @@ function update() {
             }
         }
 
-        while (bulletArray.length > 0 && bulletArray[0].used /* || bulletArray[0].y < 0 */) {
+        while (bulletArray.length > 0 && bulletArray[0].used) {
             bulletArray.shift();//removes the first
         }
 
@@ -218,7 +216,7 @@ function creatAliens() {
 }
 
 function shoot(e) {
-    if (e.code == "Space") {
+    if (e.code == "Space" && gameState === "playing") {
         let bullet = {
             x: ship.x + shipWidth * 15 / 32,
             y: ship.y,
@@ -228,7 +226,7 @@ function shoot(e) {
         }
         bulletArray.push(bullet);
 
-        // Reproduzir o áudio de tiro
+        
         const audio = document.getElementById('audio');
         audio.currentTime = 0; // Reinicia o áudio
         audio.play().catch(error => {
